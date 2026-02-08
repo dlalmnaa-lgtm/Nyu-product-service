@@ -1,0 +1,21 @@
+from behave import when, then
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+@when('I press the "{button_id}" button')
+def step_impl(context, button_id):
+    element = context.driver.find_element(By.ID, button_id.lower() + "-btn")
+    element.click()
+
+@then('I should see "{text}" in the "{field}" field')
+def step_impl(context, text, field):
+    element = context.driver.find_element(By.ID, "product_" + field.lower())
+    assert text in element.get_attribute("value")
+
+@then('I should see the message "{message}"')
+def step_impl(context, message):
+    found = WebDriverWait(context.driver, 10).until(
+        EC.text_to_be_present_in_element((By.ID, "flash_message"), message)
+    )
+    assert found
