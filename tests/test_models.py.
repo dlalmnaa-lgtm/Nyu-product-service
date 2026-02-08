@@ -1,8 +1,45 @@
+import unittest
+from service.models import Product, db
+from tests.factories import ProductFactory
+
+class TestProductModel(unittest.TestCase):
+    """اختبارات شاملة لنموذج المنتج"""
+
+    def test_read_a_product(self):
+        """اختبار القراءة (Task 2a)"""
+        product = ProductFactory()
+        product.id = None
+        product.create()
+        self.assertIsNotNone(product.id)
+        found_product = Product.find(product.id)
+        self.assertEqual(found_product.id, product.id)
+        self.assertEqual(found_product.name, product.name)
+
+    def test_update_a_product(self):
+        """اختبار التحديث (Task 2b)"""
+        product = ProductFactory()
+        product.create()
+        product.description = "updated"
+        product.update()
+        self.assertEqual(product.description, "updated")
+
     def test_delete_a_product(self):
-        """It should Delete a Product"""
+        """اختبار الحذف (Task 2c)"""
         product = ProductFactory()
         product.create()
         self.assertEqual(len(Product.all()), 1)
-        # delete the product and check that it have deleted
         product.delete()
         self.assertEqual(len(Product.all()), 0)
+
+    def test_list_all_products(self):
+        """اختبار القائمة الكاملة (Task 2d)"""
+        for _ in range(3):
+            ProductFactory().create()
+        self.assertEqual(len(Product.all()), 3)
+
+    def test_find_by_name(self):
+        """اختبار البحث بالاسم (Task 2e)"""
+        product = ProductFactory()
+        product.create()
+        found = Product.find_by_name(product.name)
+        self.assertEqual(found[0].name, product.name)
