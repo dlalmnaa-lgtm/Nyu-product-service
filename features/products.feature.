@@ -1,0 +1,32 @@
+Feature: Product Service Administration
+    As a Product Manager
+    I want to manage the product inventory
+    So that I can keep track of what we sell
+
+Background:
+    Given the following products
+        | name       | description | price | available | category |
+        | Fedora     | A hat       | 20    | True      | CLOTHS   |
+        | Laptop     | A computer  | 500   | True      | ELECTRONICS |
+        | iPhone     | A phone     | 800   | False     | ELECTRONICS |
+
+Scenario: Reading a Product
+    When I visit the "Home Page"
+    And I set the "Name" to "Fedora"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    When I press the "Edit" button
+    Then I should see "Fedora" in the "Name" field
+
+Scenario: Updating a Product
+    When I visit the "Home Page"
+    And I set the "Name" to "Fedora"
+    And I press the "Search" button
+    Then I should see "Fedora" in the "Name" field
+    When I set the "Name" to "New Fedora"
+    And I press the "Update" button
+    Then I should see the message "Success"
+    When I press the "Clear" button
+    And I set the "Name" to "New Fedora"
+    And I press the "Search" button
+    Then I should see "New Fedora" in the "Name" field
