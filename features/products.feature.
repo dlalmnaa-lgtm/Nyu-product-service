@@ -30,3 +30,20 @@ Scenario: Updating a Product
     And I set the "Name" to "New Fedora"
     And I press the "Search" button
     Then I should see "New Fedora" in the "Name" field
+Scenario: List all products
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Fedora" in the results
+    And I should see "Laptop" in the results
+
+Scenario: Search by Category
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I select "ELECTRONICS" from the "Category" drop-down
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Laptop" in the results
+    And I should not see "Fedora" in the results
+
