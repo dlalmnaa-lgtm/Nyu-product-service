@@ -46,4 +46,22 @@ Scenario: Search by Category
     Then I should see the message "Success"
     And I should see "Laptop" in the results
     And I should not see "Fedora" in the results
+Scenario: Search by Availability
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I select "True" from the "Available" drop-down
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Fedora" in the results
+    And I should see "Laptop" in the results
+    And I should not see "iPhone" in the results
+
+Scenario: Search by Name
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I set the "Name" to "Fedora"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Fedora" in the results
+    And I should not see "Laptop" in the results
 
